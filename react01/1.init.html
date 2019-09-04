@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <script src="../base/browser.min.js"></script>
+    <script src="../base/react-dom.min.js"></script>
+    <script src="../base/react.min.js"></script> -->
+    <script src="../base/react.min.js"></script>
+    <!-- 提供了react对象 -->
+    <script src="../base/react-dom.min.js"></script>
+    <!--  提供reactdom‘对象-->
+    <script src="../base/browser.min.js"></script>
+    <!-- 帮助浏览器解析jsx javascriptxml   -->
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+
+    </div>
+    <script type='text/babel'>
+        let Hehe=React.createClass({
+            render(){
+                return (
+                    <div>
+                        <h1>hehe</h1>
+                        <hr/>
+                        <h1>heheh</h1>
+                    </div>
+                )
+            }
+        })
+        ReactDOM.render(<Hehe/>,app)
+    </script>
+</body>
+</html>
+
