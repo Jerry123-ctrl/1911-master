@@ -4,36 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    
     <script src="../base/react.min.js"></script>
-    <!-- 提供了react对象 -->
     <script src="../base/react-dom.min.js"></script>
-    <!--  提供reactdom‘对象-->
     <script src="../base/browser.min.js"></script>
-    <!-- 帮助浏览器解析jsx javascriptxml   -->
-
-
     <title>Document</title>
 </head>
 <body>
-    <div id='app'>
-
-    </div>
-    <script type='text/babel'>
-        let Hehe=React.createClass({
+    <div id="app"></div>
+    <script type="text/babel">
+        let Component=React.createClass({
+            getDefaultProps(){
+                console.log('初始化props',this)
+                return {
+                    hehe:'123'
+                }
+            },
             render(){
+                console.log('渲染函数',this)
+                let {state}=this
                 return (
                     <div>
-                        <h1>hehe</h1>
-                        <hr/>
-                        <h1>heheh</h1>
+                        {this.props.hehe}
                     </div>
                 )
             }
         })
-        ReactDOM.render(<Hehe/>,app)
+        let name='韩梅梅'
+        ReactDOM.render(<Component hehe={name}/>,app)
     </script>
 </body>
 </html>
-

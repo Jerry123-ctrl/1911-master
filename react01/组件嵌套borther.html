@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../base/react.min.js"></script>
+    <script src="../base/react-dom.min.js"></script>
+    <script src="../base/browser.min.js"></script>
+    <style>
+        .test{
+            background:red;
+            width:100px;height:100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        let Father=React.createClass({
+            getInitialState(){
+                return {
+                    show:true
+                }
+            },
+            toggle(){
+                this.setState({show:!this.state.show})
+            },
+            render(){
+                console.log(this)
+                return (
+                    <div>
+                        <h3>这里是父组件</h3>
+                        <Son1 fafun={this.toggle}></Son1>
+                        <Son2 show={this.state.show}></Son2>
+                    </div>
+                )
+            }
+        })
+        let Son1 =React.createClass({
+            render(){
+                return (
+                    <div>
+                        <h6>这里是子组件</h6>
+                        <button onClick={this.props.fafun}>songbtn</button>
+                    </div>
+                )
+            }
+        })
+        let Son2=React.createClass({
+            render(){
+                return (
+                    <div>
+                        <h6>这里是子组件</h6>
+                        {!this.props.show||<div className="test"></div>}
+                    </div>
+                )
+            }
+        })
+        ReactDOM.render(<Father/>,app)
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../base/react.min.js"></script>
+    <script src="../base/react-dom.min.js"></script>
+    <script src="../base/browser.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        let Father=React.createClass({
+            getInitialState(){
+                return {
+                    hairtype:'小平头'
+                }
+            },
+            changeHair(){//父组件拿到自组件的事件
+                this.refs.hehe.songtest()
+            },
+            render(){
+                return (
+                    <div>
+                        <h3>这里是父组件</h3>
+                        <button onClick={this.changeHair}>改发型</button>
+                        <Son ref='hehe'></Son>
+                    </div>
+                )
+            }
+        })
+
+        let Son=React.createClass({
+            getDefaultProps(){
+                return {
+                    hair:'杀马特洗剪吹'
+                }
+            },
+            songtest(){
+                alert('点击了子组件')
+            },
+            render(){
+                //在这里拿不到dom元素,还没渲染
+                let {props,state}=this
+                return (
+                    <div>
+                        <h6>这里是子元素</h6>
+                        <p>小儿子：{props.hair}</p>
+                    </div>
+                )
+            }
+        })
+        ReactDOM.render(<Father/>,app)
+    </script>
+</body>
+</html>

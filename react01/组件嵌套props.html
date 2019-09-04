@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../base/react.min.js"></script>
+    <script src="../base/react-dom.min.js"></script>
+    <script src="../base/browser.min.js"></script>
+</head>
+<body>
+    <!-- 父子 ：将父组件的值传递给子组件,通过props-->
+    <div id="app"></div>
+    <script type="text/babel">
+        let Father =React.createClass({
+            getInitialState(){
+                return {
+                    hairtype:'小平头'
+                }
+            },
+            changeHair(){
+                this.setState({hairtype:'光'})
+                //外部同时声明数据,以外部来的为准,
+                //父亲的值对于儿子的就是外部的
+            },
+            render(){
+                return (
+                    <div>
+                        <h3>这是父组件</h3>
+                        <button onClick={this.changeHair}>改发型</button>
+                        <Son hair={this.state.hairtype}></Son>
+                    </div>
+                )
+            }
+        })
+
+        let Son =React.createClass({
+            getDefaultProps(){
+                return {
+                    hair:'杀马特洗剪吹'
+                }
+            },
+            render(){
+                let {props,state}=this
+                return (
+                    <div>
+                        <h6>这里是儿子组件</h6>
+                        <p>小儿子:{props.hair}</p>
+                    </div>
+                )
+            }
+        })
+        ReactDOM.render(<Father/>,app)
+    </script>
+</body>
+</html>
