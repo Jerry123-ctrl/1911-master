@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../base/react.min.js"></script>
+    <!-- 提供了react对象 -->
+    <script src="../base/react-dom.min.js"></script>
+    <!--  提供reactdom‘对象-->
+    <script src="../base/browser.min.js"></script>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script type="text/babel">
+        let Box=React.createClass({
+            getInitialState(){
+                return {
+                    list:[
+                        {txt:'hahah',finish:false},
+                        {txt:'lalal',finish:true}
+                    ]
+                }
+            },
+            addList(msg){
+                let list=this.state.list
+                list.push({txt:msg,finish:false})
+                this.setState({list:list})
+            },
+            delList(index){
+                let list=this.state.list
+                list.splice(index,1)
+                this.setState({list:list})
+            },
+            change(index){
+                console.log(index)
+                console.log('修改值',this)
+                let list=this.state.list
+                list[index].finish=!list[index].finish
+                this.setState({list:list})
+            },
+            render(){
+                let {state}=this
+                return(
+                    <div>
+                        <Input addList={this.addList}></Input>
+                        <List list={state.list} delList={this.delList} 
+                        change={this.change}></List>    
+                    </div>
+                )
+            }
+        })
+        let Input=React.createClass({
+            add(){
+                let msg=this.refs.input.value
+                this.props.addList(msg)
+            },
+            
+            render(){
+                return (
+                    <div>
+                        <input type="text" ref="input"/>
+                        <button onClick={this.add}>添加</button>    
+                    </div>
+                )
+            }
+        })
+
+        let List=React.createClass({
+            del(index){
+                this.props.delList(index)
+            },
+            modify(index){
+                console.log('点击修改',this)
+                this.props.change(index)
+            },
+            renderList(data){
+                return (
+                    <ul>
+                        {data.map((item,index)=>{
+                            return (
+                                <li>
+                                    {item.txt}
+                                    {item.finish?'已完成':<button onClick={this.modify.bind(this,index)}>完成</button>}
+                                    <button onClick={this.del.bind(this,index)}>删除</button>    
+                                </li>
+                            )
+                        })}   
+                    </ul>
+                )
+            },
+            render(){
+                console.log('取出props',this)
+                let {props}=this
+                return (
+                    <div>
+                        {this.renderList(props.list)}
+                    </div>
+                )
+            }
+        })
+        ReactDOM.render(<Box/>,app)
+    </script>
+</body>
+</html>

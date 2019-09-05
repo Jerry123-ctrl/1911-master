@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../base/react.min.js"></script>
+    <script src="../base/react-dom.min.js"></script>
+    <script src="../base/browser.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        let Box=React.createClass({
+            getInitialState(){
+                return {
+                    list:[
+                        {txt:'今天天气真好',finish:false},
+                        {txt:'你今天真好看',finish:true}
+                    ]
+                }
+            },
+            addList(msg){//添加
+                let list=this.state.list
+                list.push({txt:msg,ginish:false})
+                this.setState({list:list})
+            },
+            delList(index){//删除
+                let list=this.state.list
+                list.splice(index,1)
+                this.setState({list:list})
+            },
+            change(index){//改变状态
+                let list=this.state.list
+                list[index].finish=!list[index].finish
+                this.setState({list:list})
+            },
+            render(){
+                let {state}=this
+                return (
+                    <div>
+                        <Input addList={this.addList}></Input>   {/*之间绑定props属性或者是方法,子元素就可以调用*/}
+                        <List list={state.list} delList={this.delList} change={this.change}></List>    
+                    </div>
+                )
+            }
+        })
+        let List=React.createClass({
+            del(index){
+                this.props.delList(index)
+            },
+            modify(index){
+                this.props.change(index)//通过props传递 调用父元素的方法
+            },
+            renderList(data){
+                return (
+                    <ul>
+                        {data.map((item,index)=>{
+                            return (
+                                <li>
+                                    {item.txt}
+                                    {item.finish?'已完成':<button onClick={this.modify.bind(this,index)}>完成</button>}
+                                    <button onClick={this.del.bind(this,index)}>删除</button>    
+                                </li>
+                            )
+                        })}   
+                    </ul>
+                )
+            },
+            render(){
+                let {props}=this//解构赋值,直接把this里的props属性取出来
+                return (
+                    <div>
+                        {this.renderList(props.list)}
+                    </div>
+                )
+            }
+        })
+        let Input=React.createClass({
+            add(){
+                let msg=this.refs.input.value
+                this.props.addList(msg)
+            },
+            render(){
+                return (
+                    <div>
+                        <input type="text" ref="input"/>
+                        <button onClick={this.add}>添加</button> 
+                    </div>
+                    
+                )
+            }
+        })
+        ReactDOM.render(<Box/>,app)
+    </script>
+</body>
+</html> 
