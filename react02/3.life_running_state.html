@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../base/react.min.js"></script>
+    <script src="../base/react-dom.min.js"></script>
+    <script src="../base/browser.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        let Father=React.createClass({
+            getInitialState(){
+                return {
+                    age:16
+                }
+            },
+            changeAge(){
+                let age=this.state.age
+                age++
+                if(age>=20){age=20}
+                this.setState({age})
+            },
+            shouldComponentUpdate(props,state){
+                console.log('state改变',props,state)
+                //state.age:更改之后的   this.state.age:更改之前的
+                console.log('sssssssss',state.age,this.state.age)
+                if(state.age===this.state.age){//做数据判断
+                    return false
+                }else{
+                    return true
+                }
+            },
+            componentDidUpdate(props,state){
+                //存放数据更改过ajax  this是更改之后的  props、state：是额更改之前的
+                console.log('更改之后','bbb',this.state.age,'aaaaaa',state.age)
+            },
+            
+            render(){
+            console.log('render')
+            return (
+                    <div>
+                    <h3>这里是父组件</h3>
+                    {this.state.age}
+                    <button onClick={()=>{
+                        this.changeAge()
+                    }}> changage</button>
+                    </div>
+            )
+            }
+        })
+        ReactDOM.render(<Father/>,app)
+    </script>
+</body>
+</html>

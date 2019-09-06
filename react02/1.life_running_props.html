@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../base/react.min.js"></script>
+    <script src="../base/react-dom.min.js"></script>
+    <script src="../base/browser.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        let Father =React.createClass({
+            getInitialState(){
+                return {
+                    age:16
+                }
+            },
+            changeAge(){
+                let age=++this.state.age
+                if(age>=20){age=20}
+                this.setState({age})
+            },
+            render(){
+                return(
+                    <div>
+                        <h3>这里是父组件</h3>
+                        <Son age={this.state.age}></Son>
+                        <button onClick={()=>{
+                            this.changeAge()
+                        }}>changafe</button>
+                    </div>
+                )
+            }
+        })
+        let Son =React.createClass({
+            getInitialState(){
+                return{
+                    name:'hehe'
+                }
+            },
+            componentWillReceiveProps(props){//props发生改变执行的周期
+            //减少数据请求,即将废弃,数据请求也可能重新执行
+                console.log('props 改变',props,this.props)//props:改变前的  this.props:挂载之后的
+                if(props.age!==this.props.age){
+                    setTimeout(()=>{
+                        console.log('获取数据')
+                    },100)
+                }
+            },
+            shouldComponentUpdate(props,state){  //组件是否更新
+            //效率优化:可以控制组件是否重新做渲染  true:渲染  false:不渲染
+            //props：更新后的   this.props:更新前的
+                console.log('是否该更新',props,state,this.props)
+                if(this.props.age==props.age){
+                    return false
+                }else{
+                    return true
+                }
+            },
+            componentWillUpdate(){
+                //不要做数据请求,render之前
+                console.log('更新之前')
+            },
+            componentDidUpdate(){
+                console.log('更新结束')
+            },
+            render(){
+                console.log('son渲染')
+                return (
+                    <div>
+                        <h4>son</h4>
+                        儿子{this.props.age}岁
+                    </div>
+                )
+            }
+        })
+        ReactDOM.render(<Father/>,app)
+    </script>
+</body>
+</html>

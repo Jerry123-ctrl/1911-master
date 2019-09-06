@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../base/react.min.js"></script>
+    <script src="../base/react-dom.min.js"></script>
+    <script src="../base/browser.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+        let Hehe = React.createClass({
+            getInitialState(){
+                return {
+                    name:'韩梅梅'
+                }
+            },
+            componentWillMount(){//17.0版本会被废弃
+                //千万别做数据请求,在异步加载中,render之前的生命周期都会被打断,请求多次发送
+                console.log('挂载之前')
+                console.log(this) //this  是空的
+                console.log(this.refs.hehe)   //拿不到dom元素
+                console.log(this.state.name) //可以拿到state数据
+                this.state.name='李雷'   //可以修改数据
+            },
+            componentDidMount(){  //数据请求,初始化dom
+                console.log('挂载结束')
+                console.log(this)  //有数据
+                console.log(this.refs.hehe.innerText)//可以拿到
+                console.log(this.state.name)//可以拿到state数据
+                //this.state.name='李雷'  //直接修改,数据变，页面不变
+                this.setState({name:'李雷'})  //需要setState，页面才可以变化
+
+            },
+            render(){
+                console.log('渲染')
+                return (<div> 
+                            <h1>{this.state.name}</h1>
+                            <hr/>
+                            <p ref='hehe'>hehe</p>
+                        </div>)
+                }
+            })
+        ReactDOM.render(<Hehe/>,app)
+    </script>
+</body>
+</html>
