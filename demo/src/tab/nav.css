@@ -1,0 +1,12 @@
+.nav-list{
+    list-style:none;
+    display: flex;
+    width:300px;
+    height:100px;
+}
+.nav-list-li{
+    width:100px;height:100px;
+}
+.primary{
+    background:skyblue;
+}
