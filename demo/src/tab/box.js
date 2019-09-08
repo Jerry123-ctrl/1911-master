@@ -16,9 +16,16 @@ class Box extends Component{
             return true
         }
     }
-    changeNav=(item)=>{//正常函数,this的指向就变了，箭头函数不改变this指向
+    // changeNav(item){
+    //     //不加箭头函数  this的指向是nav组件的方法
+    //     console.log('查看this的指向',this)  
+    //     this.setState({defaultSel:item})
+    // }
+    changeNav=(item)=>{
+        //正常函数,this的指向就变了,this的指向是nav组件的方法
+        //箭头函数不改变this指向,指向父组件box,只有指向box,才可以修改state的值
         // alert(item)
-        console.log(this)
+        console.log('查看this的指向',this)
         this.setState({defaultSel:item})
     }
     render(){
