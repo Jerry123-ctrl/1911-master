@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import Hoc from './hoc'
+import Hoc from './hoc'//引入高阶组件
 class Hello extends Component{
     render(){
         return(
@@ -9,4 +9,4 @@ class Hello extends Component{
         )
     }
 }
-export default Hoc(Hello)
+export default Hoc(Hello)//调用Hoc并传参组件

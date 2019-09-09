@@ -1,10 +1,9 @@
-import React,{Component} from 'react'
+import React,{Fragment,Component} from 'react'
 class Hehe extends Component{
     constructor(){
         super()
         this.state={
-            name:'韩梅梅',
-            age:16
+            name:'韩梅梅'
         }
     }
     submit=()=>{
@@ -13,15 +12,12 @@ class Hehe extends Component{
     render(){
         return (
             <p>
-               <input type="text" value={this.state.name} onChange={(e)=>{
-                   console.log(e.target)
-                   this.setState({name:e.target.value})
-               }}/> 
-               {/* <input type="text" value={this.state.age} onClick={(e)=>{
-                   console.log(e.target.value)
-                   this.setState({age:e.target.value})
-               }}/> */}
-               <button onClick={this.submit}>提交</button>
+                <input type="text" value={this.state.name} onChange={(e)=>{   {/*onChang:表单元素事件*/}
+                    //console.log(e)//这样打印都是null,但是不影响使用
+                    console.log(e.target)//这样打印就有内容了
+                    this.setState({name:e.target.value})
+                }}/>
+                <button onClick={this.submit}>提交</button>
             </p>
         )
     }

@@ -9,7 +9,7 @@ function Home(){
     )
 }
 function Singer(props){
-    console.log('singer',props)
+    console.log('singer',props)  //跳转的组件这里面没有this  也可以找到路由信息  
     return(
         <div>
             这里是歌手
@@ -50,14 +50,16 @@ class Box extends Component{
                 <Route exact path='/home' component={Home}></Route>
                 <Route exact path='/singer' component={Singer}></Route>
                 <Route path='/my' render={(props)=>{//嵌套路由父元素不要加精准匹配
+                console.log('aaaaaaaaa',this,props)  //只有一个参数props  里面包含路由信息
                     return (
                         <div>
                             <h3> 我的</h3>
                             <Link to='/my/info'>个人信息</Link>
                             <Link to='/my/longin'>登录</Link>
                             <Switch>
-                                <Redirect exact from='/my' to='/my/login'></Redirect>
-                                <Route path='/my/login' ccomonent={Login}></Route>
+                                <Redirect exact from='/my' to='/my/login'></Redirect>{/*重定向*/}
+                                <Route path='/my/login' ccomonent={Login}></Route>  
+                                {/*想在那嵌套就在那些route*/}
                                 <Route path='/my/info' component={Info}></Route>
                             </Switch>   
                         </div>     
@@ -72,14 +74,16 @@ class Box extends Component{
                         </div>
                     )
                 }}></Route> */}
+
                <Route exact path='/rank' children={(props)=>{
-                    console.log('aaaa',this)
+                    console.log("这里是children",this)
                     return (
                         <div>
                          排行
                      </div>
                      )
                  }}></Route>
+
                 <Route component={NotFind} />
             </HashRouter>  
         )

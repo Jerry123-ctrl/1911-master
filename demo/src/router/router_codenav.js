@@ -1,5 +1,5 @@
 import React ,{Component,Fragment} from 'react'
-import {HashRouter,Link,Route,NavLink,Switch,Redirect} from 'react-router-dom'
+import {HashRouter,Route,NavLink,Switch,Redirect} from 'react-router-dom'
   function Home(){
       return (
           <div>这里是home</div>
@@ -23,7 +23,15 @@ import {HashRouter,Link,Route,NavLink,Switch,Redirect} from 'react-router-dom'
   }
   class My extends Component{
       jump=(path)=>{
-          this.props.history.push('/my'+path)
+          //跳转的几种方式  跳转到那个组件,那个组件打印props,找传参地址
+          //this.props.history.push('/my'+path)  //字符串拼接  push:一步一步回退
+         //this.props.history.replace('/my'+path) // replace:不能一步一步回退,回退直接到根
+
+        // this.props.history.push({pathname:`/my${path}`,state:{us:123,ps:123}})//state传参,页面刷新,页面数据不保留
+         //可以传参  单地址栏中不显示 在state里面取值  取值：this.props.localtion.state+值名
+        //this.props.history.push({pathname:`/my${path}`,query:{us:123,ps:222}})//query传参跟state差不多 不建议使用
+
+        this.props.history.push(`/my${path}?us:网易&ps:123`)  //地址栏中也显示 get传参在search里面,不好取,得把数据进行处理
       }
       render(){
           console.log('my',this)
@@ -46,11 +54,11 @@ import {HashRouter,Link,Route,NavLink,Switch,Redirect} from 'react-router-dom'
           return (
               <HashRouter>
                   <NavLink to='/home' activeClass='red'>首页</NavLink>
-                  <NavLink to='/my' activeClass='red'></NavLink>
+                  <NavLink to='/my' activeClass='red'>我的</NavLink>
                   <Switch>
                       <Redirect exact from='/' to='/home'></Redirect>
                       <Route exact from='/home' component={Home}></Route>
-                      <Route path='/my' component={My}></Route>
+                      <Route path='/my' component={My}></Route>{/*跳到组件,组件在跳转组件*/}
                       
                   </Switch>
               </HashRouter>
